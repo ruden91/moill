@@ -30,3 +30,6 @@ public
 .firebaserc
 database.rules.json
 firebase.json
+
+# private
+.env
