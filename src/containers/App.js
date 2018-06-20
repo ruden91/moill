@@ -22,6 +22,16 @@ class App extends Component {
     this.setState({
       items: [
         {
+          menu: "일반",
+          link: "/basic",
+          subMenus: [
+            {
+              menu: "한국사능력검정시험",
+              link: "/korean"
+            }
+          ]
+        },
+        {
           menu: "어학",
           link: "/language",
           subMenus: [
@@ -68,10 +78,6 @@ class App extends Component {
             {
               menu: "정보보안기사",
               link: "/engineerInformationSecurity"
-            },
-            {
-              menu: "정보몰라",
-              link: "/tople"
             }
           ]
         }
@@ -106,21 +112,6 @@ class App extends Component {
                 ))}
               </SubMenu>
             ))}
-            {/* <SubMenu title="asdfasdf">
-              <Menu.item>
-                <NavLink to="#">테스트</NavLink>
-              </Menu.item>
-            </SubMenu> */}
-            {/* {items.map(item => (
-              <SubMenu title={<span>{item.menu}</span>}>
-                {item.subMenus.map((subMenu, index) => (
-                  <NavLink to={`/${index}`}>{subMenu}</NavLink>
-                  // <Menu.item key={index}>
-                    
-                  // </Menu.item>
-                ))}
-              </SubMenu>
-            ))} */}
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: 200 }}>
