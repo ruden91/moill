@@ -1,8 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { LocaleProvider } from "antd";
+import koKr from "antd/lib/locale-provider/ko_KR";
+import registerServiceWorker from "./registerServiceWorker";
+
+import App from "containers/App";
+
+ReactDOM.render(
+  <LocaleProvider locale={koKr}>
+    <App />
+  </LocaleProvider>,
+  document.getElementById("root")
+);
 registerServiceWorker();

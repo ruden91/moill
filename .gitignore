@@ -25,3 +25,8 @@ data
 
 #
 public
+
+# firebase config
+.firebaserc
+database.rules.json
+firebase.json
