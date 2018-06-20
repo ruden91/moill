@@ -1,17 +1,88 @@
 import React, { Component } from "react";
+import { Route, NavLink, Redirect, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
+
 import GlobalHeader from "components/GlobalHeader";
 import GlobalFooter from "components/GlobalFooter";
+import ScheduleList from "components/ScheduleList";
+
 import styled from "styled-components";
 const { Header, Content, Footer, Sider } = Layout;
-
+const { SubMenu } = Menu;
 const StyledLogo = styled.div`
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 `;
-export default class App extends Component {
+class App extends Component {
+  state = {
+    items: []
+  };
+  componentDidMount() {
+    this.setState({
+      items: [
+        {
+          menu: "어학",
+          link: "/language",
+          subMenus: [
+            {
+              menu: "토익",
+              link: "/toeic"
+            },
+            {
+              menu: "토익스피킹",
+              link: "/toeicSpeaking"
+            },
+            {
+              menu: "토플",
+              link: "/tople"
+            }
+          ]
+        },
+        {
+          menu: "IT",
+          link: "/it",
+          subMenus: [
+            {
+              menu: "CCNA",
+              link: "/ccna"
+            },
+            {
+              menu: "CCNP",
+              link: "/ccnp"
+            },
+            {
+              menu: "mos",
+              link: "/mos"
+            }
+          ]
+        },
+        {
+          menu: "국가공인",
+          link: "/country",
+          subMenus: [
+            {
+              menu: "정보처리기사",
+              link: "/engineerInformationProcessing"
+            },
+            {
+              menu: "정보보안기사",
+              link: "/engineerInformationSecurity"
+            },
+            {
+              menu: "정보몰라",
+              link: "/tople"
+            }
+          ]
+        }
+      ]
+    });
+  }
+
   render() {
+    const { items } = this.state;
+    const path = this.props.location.pathname;
+
     return (
       <Layout>
         <Sider
@@ -24,38 +95,32 @@ export default class App extends Component {
         >
           <StyledLogo />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span className="nav-text">nav 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span className="nav-text">nav 2</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span className="nav-text">nav 3</span>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Icon type="bar-chart" />
-              <span className="nav-text">nav 4</span>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <Icon type="cloud-o" />
-              <span className="nav-text">nav 5</span>
-            </Menu.Item>
-            <Menu.Item key="6">
-              <Icon type="appstore-o" />
-              <span className="nav-text">nav 6</span>
-            </Menu.Item>
-            <Menu.Item key="7">
-              <Icon type="team" />
-              <span className="nav-text">nav 7</span>
-            </Menu.Item>
-            <Menu.Item key="8">
-              <Icon type="shop" />
-              <span className="nav-text">nav 8</span>
-            </Menu.Item>
+            {items.map((item, index) => (
+              <SubMenu title={item.menu}>
+                {item.subMenus.map((submenu, subIndex) => (
+                  <Menu.Item key={`${index} ${subIndex}`}>
+                    <NavLink to={`${item.link}${submenu.link}`}>
+                      {submenu.menu}
+                    </NavLink>
+                  </Menu.Item>
+                ))}
+              </SubMenu>
+            ))}
+            {/* <SubMenu title="asdfasdf">
+              <Menu.item>
+                <NavLink to="#">테스트</NavLink>
+              </Menu.item>
+            </SubMenu> */}
+            {/* {items.map(item => (
+              <SubMenu title={<span>{item.menu}</span>}>
+                {item.subMenus.map((subMenu, index) => (
+                  <NavLink to={`/${index}`}>{subMenu}</NavLink>
+                  // <Menu.item key={index}>
+                    
+                  // </Menu.item>
+                ))}
+              </SubMenu>
+            ))} */}
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: 200 }}>
@@ -66,19 +131,11 @@ export default class App extends Component {
             <div
               style={{ padding: 24, background: "#fff", textAlign: "center" }}
             >
-              ...
-              <br />
-              Really
-              <br />...<br />...<br />...<br />
-              long
-              <br />...<br />...<br />...<br />...<br />...<br />...
-              <br />...<br />...<br />...<br />...<br />...<br />...
-              <br />...<br />...<br />...<br />...<br />...<br />...
-              <br />...<br />...<br />...<br />...<br />...<br />...
-              <br />...<br />...<br />...<br />...<br />...<br />...
-              <br />...<br />...<br />...<br />...<br />...<br />...
-              <br />...<br />...<br />...<br />...<br />...<br />
-              content
+              <Route
+                exact
+                path={path}
+                render={() => <ScheduleList path={path} />}
+              />
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
@@ -89,3 +146,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withRouter(App);
